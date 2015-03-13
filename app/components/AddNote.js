@@ -11,21 +11,16 @@ export default React.createClass({
     e.preventDefault()
 
     let title = this.refs.title.getDOMNode().value
-    let text = this.refs.text.getDOMNode().value
     this.refs.title.getDOMNode().value = ''
-    this.refs.text.getDOMNode().value = ''
 
-    console.log(`add ${title} ${text}`)
-
-    this.fire.push({ title, text })
+    this.fire.push({ title })
   },
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <input ref='title' placeholder='Title'/>
-        <input ref='text' placeholder='Note'/>
-        <button type='submit'>Add</button>
+        <button type='submit'>Add Note</button>
       </form>
     )
   }

@@ -9,7 +9,7 @@ function toArray(obj) {
     var result = obj[key]
 
     if (typeof result === 'object') {
-      result._key = key
+      result.key = key
     } else {
       result = {_key: key, val: result}
     }
