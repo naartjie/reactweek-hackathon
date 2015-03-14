@@ -68,22 +68,5 @@ export default React.createClass({
         </div>
       </Draggable>
     )
-
-      // <div>test 123</div>
-      //   {// axis="x"
-      //   // handle=".handle"
-      //   // grid={[25, 25]}
-      //   // start={{x: 25, y: 25}}
-      //   // zIndex={100}
-      //   // onStart={this.handleStart}
-      //   // onDrag={this.handleDrag}
-      //   // onStop={this.handleStop}> }
-
-
-      //   <div className='box'>
-      //     <h4>{title}</h4>
-      //     <MarkdownTextarea initialValue='test 123' />
-      //   </div>
-
   }
 })
