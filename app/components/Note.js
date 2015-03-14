@@ -64,7 +64,7 @@ export default React.createClass({
   render() {
 
     var { title, text, left, top } = this.props
-    var position = {x: left, y: top}
+    var position = {x: left, y: top, width: 220, height: 100}
     return (
       <Draggable
         ref='draggable'

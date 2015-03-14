@@ -443,7 +443,10 @@ module.exports = React.createClass({
       // Set left if horizontal drag is enabled
       left: canDragX(this)
         ? this.state.clientX
-        : this.state.startX
+        : this.state.startX,
+
+      width: this.props.start.width,
+      height: this.props.start.height,
     };
 
     // Set zIndex if currently dragging and prop has been provided

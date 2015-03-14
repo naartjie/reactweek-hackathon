@@ -19,14 +19,14 @@ export default React.createClass({
     this.fire.push({
       title,
       zIndex: nextZIndex(),
-      left: 100,
-      top: 100
+      left: 20,
+      top: 10
     })
   },
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className='add_note_form'>
         <input ref='title' placeholder='Title'/>
         <button type='submit'>Add Note</button>
       </form>

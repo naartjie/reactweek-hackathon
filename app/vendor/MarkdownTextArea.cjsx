@@ -47,6 +47,7 @@ module.exports = React.createClass
     textareaStyles = {
       display: 'block'
       resize: 'none'
+      fontSize: '16'
     }
 
     # Are we writing or previewing?
@@ -65,6 +66,7 @@ module.exports = React.createClass
       textarea = <div
           onClick={@handleToggleClick}
           className="react-markdown-textarea__preview"
+          style={{fontSize: '16'}}
           dangerouslySetInnerHTML={__html: marked(@state.value)}>
       </div>
 
