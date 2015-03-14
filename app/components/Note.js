@@ -7,15 +7,26 @@ export default React.createClass({
 
   propTypes: {
     zIndex: React.PropTypes.number.isRequired,
-    title: React.PropTypes.string.  isRequired,
+    title: React.PropTypes.string.isRequired,
+    maxZ: React.PropTypes.func.isRequired,
+
     text: React.PropTypes.string,
+    left: React.PropTypes.number,
+    top: React.PropTypes.number,
   },
 
-  getInitialState() {
+  getDefaultProps() {
     return {
-      zIndex: this.props.zIndex
+      top: 0,
+      left: 0,
+      text: '',
+      maxZ: () => {}
     }
   },
+
+  // getInitialState() {
+  //   return { zIndex: this.props.zIndex }
+  // },
 
   componentDidMount() {
     this.fire = fire.getRef().child(`notes/${this.props._key}`)
@@ -23,8 +34,13 @@ export default React.createClass({
 
   componentWillReceiveProps(nextProps) {
     this.refs.markdown.setState({
-      value: nextProps.text
-    });
+      value: nextProps.text,
+    })
+    this.refs.draggable.setState({
+      clientX: nextProps.left,
+      clientY: nextProps.top,
+      // zIndex: nextProps.zIndex,
+    })
   },
 
   handleRemove() {
@@ -37,11 +53,14 @@ export default React.createClass({
   },
 
   handleStopDrag() {
-    var newZ = this.state.zIndex + 1
-    this.setState({
-      zIndex: newZ
-    })
-    this.fire.update({zIndex: newZ})
+    var maxZ = this.props.maxZ()
+
+    console.log('maxZ', maxZ)
+
+    if (maxZ > this.props.zIndex) {
+      this.refs.draggable.zIndexDropped = maxZ + 1
+      this.fire.update({zIndex: maxZ + 1})
+    }
   },
 
   handleUpdateText(text) {
@@ -50,14 +69,18 @@ export default React.createClass({
 
   render() {
 
-    var { title, text } = this.props
+    var { title, text, left, top } = this.props
+    var position = {x: left, y: top}
 
     return (
       <Draggable
-        zIndex={this.state.zIndex}
+        ref='draggable'
+        zIndex={1000000}
+        zIndexDropped={this.props.zIndex}
+        start={position}
         onDrag={this.handleDrag}
-        onStop={this.handleStopDrag}
-      >
+        onStop={this.handleStopDrag}>
+
         <div>
           <h4>{title}</h4>
           <MarkdownTextarea

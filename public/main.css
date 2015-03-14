@@ -785,6 +785,9 @@ button {
 
   100% {
     opacity: 0.15; } }
+.react-markdown-textarea {
+  background-color: white;
+}
 .react-markdown-textarea__textarea-wrapper {
   border: 1px solid #cccccc;
   overflow: hidden;

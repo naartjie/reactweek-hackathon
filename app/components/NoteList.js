@@ -1,6 +1,8 @@
 import React from 'react'
 import Note from './Note'
 import fire from '../lib/firebase'
+import notesZStore from '../stores/notesZStore'
+
 import { toArray } from '../lib/utils'
 
 export default React.createClass({
@@ -15,7 +17,7 @@ export default React.createClass({
   },
 
   componentWillUnmount() {
-    this.file.off('value', this.updateMe)
+    this.fire.off('value', this.updateMe)
   },
 
   updateMe(snapshot) {
@@ -30,7 +32,10 @@ export default React.createClass({
           return <Note
             key={note.key}
             _key={note.key}
-            zIndex={note.zIndex || 100}
+            left={note.left}
+            top={note.top}
+            maxZ={notesZStore.maxZIndex}
+            zIndex={note.zIndex}
             title={note.title}
             text={note.text}
             index={idx} />

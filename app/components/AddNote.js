@@ -1,5 +1,6 @@
 import React from 'react'
 import firebase from '../lib/firebase'
+import noteZStore from '../stores/notesZStore'
 
 export default React.createClass({
 
@@ -15,7 +16,12 @@ export default React.createClass({
     if (!title) return
     this.refs.title.getDOMNode().value = ''
 
-    this.fire.push({ title })
+    this.fire.push({
+      title,
+      zIndex: noteZStore.maxZIndex() + 1,
+      left: 100,
+      top: 100
+    })
   },
 
   render() {
