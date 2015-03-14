@@ -1,8 +1,11 @@
 import firebase from '../lib/firebase'
 import { toArray } from '../lib/utils'
 
+import { DRAG_Z_INDEX } from '../lib/constants'
+
 export default {
-  maxZIndex
+  maxZIndex,
+  nextZIndex,
 }
 
 var fire = firebase.getRef().child('notes')
@@ -14,6 +17,13 @@ fire.on('value', (snapshot) => {
 
 function maxZIndex() {
   return notes.reduce((prevMax, note) => {
-    return Math.max(prevMax, note.zIndex)
+    if (note.zIndex === DRAG_Z_INDEX)
+      return prevMax
+    else
+      return Math.max(prevMax, note.zIndex)
   }, 0)
+}
+
+function nextZIndex() {
+  return maxZIndex() + 1
 }

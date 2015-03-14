@@ -1,6 +1,7 @@
 import React from 'react'
-import Draggable from 'react-draggable'
+import Draggable from '../vendor/Draggable'
 import MarkdownTextarea from '../vendor/MarkdownTextarea'
+import { DRAG_Z_INDEX } from '../lib/constants'
 import fire from '../lib/firebase'
 
 export default React.createClass({
@@ -24,10 +25,6 @@ export default React.createClass({
     }
   },
 
-  // getInitialState() {
-  //   return { zIndex: this.props.zIndex }
-  // },
-
   componentDidMount() {
     this.fire = fire.getRef().child(`notes/${this.props._key}`)
   },
@@ -39,7 +36,6 @@ export default React.createClass({
     this.refs.draggable.setState({
       clientX: nextProps.left,
       clientY: nextProps.top,
-      // zIndex: nextProps.zIndex,
     })
   },
 
@@ -47,20 +43,18 @@ export default React.createClass({
     this.fire.remove()
   },
 
+  handleStartDrag() {
+    this.prevZIndex = this.props.zIndex
+  },
+
   handleDrag(e, ui) {
     var {top, left} = ui.position
-    this.fire.update({left, top})
+    this.fire.update({left, top, zIndex: DRAG_Z_INDEX})
   },
 
   handleStopDrag() {
-    var maxZ = this.props.maxZ()
-
-    console.log('maxZ', maxZ)
-
-    if (maxZ > this.props.zIndex) {
-      this.refs.draggable.zIndexDropped = maxZ + 1
-      this.fire.update({zIndex: maxZ + 1})
-    }
+    var maxZ = Math.max(this.props.maxZ(), this.prevZIndex)
+    this.fire.update({zIndex: maxZ + 1})
   },
 
   handleUpdateText(text) {
@@ -71,13 +65,13 @@ export default React.createClass({
 
     var { title, text, left, top } = this.props
     var position = {x: left, y: top}
-
     return (
       <Draggable
         ref='draggable'
-        zIndex={1000000}
+        zIndex={DRAG_Z_INDEX}
         zIndexDropped={this.props.zIndex}
         start={position}
+        onStart={this.handleStartDrag}
         onDrag={this.handleDrag}
         onStop={this.handleStopDrag}>
 

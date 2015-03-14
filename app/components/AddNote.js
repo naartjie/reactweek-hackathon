@@ -1,6 +1,6 @@
 import React from 'react'
 import firebase from '../lib/firebase'
-import noteZStore from '../stores/notesZStore'
+import { nextZIndex } from '../stores/notesZStore'
 
 export default React.createClass({
 
@@ -18,7 +18,7 @@ export default React.createClass({
 
     this.fire.push({
       title,
-      zIndex: noteZStore.maxZIndex() + 1,
+      zIndex: nextZIndex(),
       left: 100,
       top: 100
     })
