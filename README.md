@@ -1,6 +1,6 @@
 ### Instructions
 
-Open up 2 or more browsers on http://rerenote.firebaseapp.com.
+Open up 2 browsers side by side: http://rerenote.firebaseapp.com.
 
  * Add a note
  * Move a note
