@@ -26,8 +26,12 @@ export default React.createClass({
   },
 
   render() {
+    var style = {
+      position: 'relative'
+    }
+
     return (
-      <div>
+      <div style={style}>
         {this.state.notes.map((note, idx) => {
           return <Note
             key={note.key}

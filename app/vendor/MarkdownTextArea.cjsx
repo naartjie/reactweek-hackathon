@@ -61,10 +61,9 @@ module.exports = React.createClass
         ref="textarea"
         style={textareaStyles}
        />)
-        # onClick={@handleToggleClick}
     else
       textarea = <div
-          onClick={@handleToggleClick}
+          onClick={@handleClick}
           className="react-markdown-textarea__preview"
           style={{fontSize: '16'}}
           dangerouslySetInnerHTML={__html: marked(@state.value)}>
@@ -123,7 +122,9 @@ module.exports = React.createClass
     @setState value: newValue
     @props.onChange(newValue)
 
-  handleToggleClick: (e) ->
+  handleClick: (e) ->
+    return @props.onClickLink(e) if (e.target.getAttribute('href'))
+
     if @state.active is 'write'
       @setState active: 'preview'
     else

@@ -61,6 +61,17 @@ export default React.createClass({
     this.fire.update({text})
   },
 
+  handleClickLink(e) {
+    var url = e.target.getAttribute('href')
+
+    if (url.startsWith('internal')) {
+      e.preventDefault()
+      // TODO find note and set focus
+    } else {
+      e.target.setAttribute('target', '_blank')
+    }
+  },
+
   render() {
 
     var { title, text, left, top } = this.props
@@ -81,6 +92,7 @@ export default React.createClass({
             ref='markdown'
             initialValue={text}
             onChange={this.handleUpdateText}
+            onClickLink={this.handleClickLink}
           />
         </div>
       </Draggable>

@@ -435,6 +435,10 @@ module.exports = React.createClass({
 
   render: function () {
     var style = {
+      position: 'absolute',
+      background: 'white',
+      boxShadow: 'rgb(204, 204, 204) 3px 19px 12px 12px',
+
       // Set top if vertical drag is enabled
       top: canDragY(this)
         ? this.state.clientY
