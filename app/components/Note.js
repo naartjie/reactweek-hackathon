@@ -92,7 +92,7 @@ export default React.createClass({
 
         <div>
           <h4>
-            {title}
+            {title}{' '}
             <i onClick={this.handleRemove} className="fa fa-trash-o"></i>{' '}
             <i onClick={this.handleClose} className="fa fa-times"></i>
           </h4>
