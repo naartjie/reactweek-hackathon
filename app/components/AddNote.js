@@ -11,6 +11,8 @@ export default React.createClass({
     e.preventDefault()
 
     let title = this.refs.title.getDOMNode().value
+
+    if (!title) return
     this.refs.title.getDOMNode().value = ''
 
     this.fire.push({ title })

@@ -18,7 +18,7 @@ module.exports = React.createClass
 
   getInitialState: ->
     state = {
-      active: 'write'
+      active: 'preview'
       value: if @props.initialValue? then @props.initialValue else ""
     }
 
@@ -60,45 +60,49 @@ module.exports = React.createClass
         ref="textarea"
         style={textareaStyles}
        />)
+        # onClick={@handleToggleClick}
     else
       textarea = <div
+          onClick={@handleToggleClick}
           className="react-markdown-textarea__preview"
           dangerouslySetInnerHTML={__html: marked(@state.value)}>
       </div>
 
+    tabs = ''
+
     # Add preview?
-    unless @props.noPreview
-      tabs =
-        <ul className="react-markdown-textarea__nav" onMouseDown={@toggleTab} style={ulStyles}>
-          <li className={writeTabClasses} style={liStyles}>Edit</li>
-          <li className={previewTabClasses} style={liStyles}>Save</li>
-        </ul>
+    # unless @props.noPreview
+    #   tabs =
+    #     <ul className="react-markdown-textarea__nav" onMouseDown={@toggleTab} style={ulStyles}>
+    #       <li className={writeTabClasses} style={liStyles}>Edit</li>
+    #       <li className={previewTabClasses} style={liStyles}>Save</li>
+    #     </ul>
 
     return (
       <div className="react-markdown-textarea">
         {tabs}
         <div className="react-markdown-textarea__textarea-wrapper">
           {textarea}
-          <button
-            onClick={@_onSave}
-            disabled={if @props.saving then "disabled" else false}
-            className="react-markdown-textarea__save-button">
-              {@props.buttonText}
-          </button>
-          { if @props.deleteButton
-            <button
-              onClick={@_onDelete}
-              disabled={if @props.saving then "disabled" else false}
-              className="react-markdown-textarea__delete-button">
-                Delete
-            </button>
-          }
-          {if @props.saving and @props.spinner?
-            @props.spinner(@props.spinnerOptions)
-          }
         </div>
       </div>
     )
+          # <button
+          #   onClick={@_onSave}
+          #   disabled={if @props.saving then "disabled" else false}
+          #   className="react-markdown-textarea__save-button">
+          #     {@props.buttonText}
+          # </button>
+          # { if @props.deleteButton
+          #   <button
+          #     onClick={@_onDelete}
+          #     disabled={if @props.saving then "disabled" else false}
+          #     className="react-markdown-textarea__delete-button">
+          #       Delete
+          #   </button>
+          # }
+          # {if @props.saving and @props.spinner?
+          #   @props.spinner(@props.spinnerOptions)
+          # }
 
   toggleTab: (e) ->
     # Ignore clicks not on an li
@@ -116,6 +120,12 @@ module.exports = React.createClass
     newValue = @refs.textarea.getDOMNode().value
     @setState value: newValue
     @props.onChange(newValue)
+
+  handleToggleClick: (e) ->
+    if @state.active is 'write'
+      @setState active: 'preview'
+    else
+      @setState active: 'write'
 
   _onSave: ->
     @props.onSave(@state.value)

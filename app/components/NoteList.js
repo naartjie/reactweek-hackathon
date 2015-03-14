@@ -25,16 +25,17 @@ export default React.createClass({
 
   render() {
     return (
-      <ul>
+      <div>
         {this.state.notes.map((note, idx) => {
           return <Note
             key={note.key}
             _key={note.key}
+            zIndex={note.zIndex || 100}
             title={note.title}
             text={note.text}
             index={idx} />
         })}
-      </ul>
+      </div>
     )
   }
 })
