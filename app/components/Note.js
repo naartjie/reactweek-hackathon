@@ -43,10 +43,6 @@ export default React.createClass({
     this.fire.remove()
   },
 
-  handleClose() {
-    // TODO
-  },
-
   handleStartDrag() {
     this.prevZIndex = this.props.zIndex
   },
@@ -94,7 +90,6 @@ export default React.createClass({
           <h4>
             {title}{' '}
             <i onClick={this.handleRemove} className="fa fa-trash-o"></i>{' '}
-            <i onClick={this.handleClose} className="fa fa-times"></i>
           </h4>
           <MarkdownTextarea
             ref='markdown'
