@@ -6,6 +6,12 @@ import fire from '../lib/firebase'
 
 export default React.createClass({
 
+  getInitialState() {
+    return {
+      cancelEdit: false,
+    }
+  },
+
   propTypes: {
     zIndex: React.PropTypes.number.isRequired,
     title: React.PropTypes.string.isRequired,
@@ -61,6 +67,17 @@ export default React.createClass({
     this.fire.update({text})
   },
 
+  handleUnedit() {
+    this.setState({
+      cancelEdit: true
+    })
+
+    // HACK!!
+    setTimeout(function() {
+      this.setState({cancelEdit: false})
+    }.bind(this), 10)
+  },
+
   handleClickLink(e) {
     var url = e.target.getAttribute('href')
 
@@ -90,8 +107,10 @@ export default React.createClass({
           <h4>
             {title}{' '}
             <i onClick={this.handleRemove} className="fa fa-trash-o"></i>{' '}
+            <i onClick={this.handleUnedit} className="fa fa-check"></i>{' '}
           </h4>
           <MarkdownTextarea
+            cancelEdit={this.state.cancelEdit}
             ref='markdown'
             initialValue={text}
             onChange={this.handleUpdateText}

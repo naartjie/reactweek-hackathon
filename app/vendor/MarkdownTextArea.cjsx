@@ -53,7 +53,14 @@ module.exports = React.createClass
     # Are we writing or previewing?
     #
     # Swap between writing and previewing states.
-    if @state.active is 'write'
+
+    if @props.cancelEdit
+      # HACK!!
+      setTimeout(=>
+        @setState active: 'preview'
+      , 2)
+
+    if @state.active is 'write' and not @props.cancelEdit
       textarea = @transferPropsTo(<Textarea
         className="react-markdown-textarea__textarea"
         value={@state.value}
