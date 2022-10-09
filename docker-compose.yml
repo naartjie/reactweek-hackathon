@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14.5-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+  db_migration:
+    image: amacneil/dbmate:1.15
+    command: create
+    environment:
+      - DATABASE_URL="postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+    # volumes:
+    #   - $(pwd)/db:/db
+volumes:
+  db:
+    driver: local

@@ -1,26 +1,25 @@
 {
-  "name": "hack",
-  "version": "1.0.0",
+  "name": "reactweek-hackathon",
+  "type": "module",
   "scripts": {
-    "start": "node_modules/.bin/webpack-dev-server --no-info --inline --content-base ./public",
-    "build": "node_modules/.bin/webpack --optimize-minimize --progress --colors",
-    "deploy": "node_modules/.bin/firebase deploy"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "uvicorn server.app:app --host 0.0.0.0 --port 8000 --reload",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:kill": "docker compose down --volumes --remove-orphans",
+    "dbmate": "docker run --rm -it -e DATABASE_URL=postgres://postgres:postgres@reactweek-hackathon-db-1:5432/postgres?sslmode=disable --network=reactweek-hackathon_default -v \"$(pwd)/db:/db\" amacneil/dbmate:1"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "firebase": "^2.2.2",
-    "marked": "^0.3.3",
-    "react": "0.12.2",
-    "react-textarea-autosize": "^1.1.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "babel-core": "^4.7.12",
-    "babel-loader": "^4.1.0",
-    "coffee-jsx-loader": "^0.1.0",
-    "coffee-react": "^2.1.2",
-    "firebase-tools": "^1.1.5",
-    "webpack": "^1.7.3",
-    "webpack-dev-server": "^1.7.0"
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.1.0",
+    "prettier": "2.7.1",
+    "vite": "^3.1.0"
   }
 }
