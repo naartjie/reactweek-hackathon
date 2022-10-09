@@ -2,7 +2,10 @@
 
 ```sh
 npm install
-npm start
+npm run db:up
+npm run dbmate migrate
+npm run server
+npm run dev
 ```
 
 Open up 2 browsers side by side.
