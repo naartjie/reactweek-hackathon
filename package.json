@@ -13,8 +13,15 @@
     "dbmate": "docker run --rm -it -e DATABASE_URL=postgres://postgres:postgres@reactweek-hackathon-db-1:5432/postgres?sslmode=disable --network=reactweek-hackathon_default -v \"$(pwd)/db:/db\" amacneil/dbmate:1"
   },
   "dependencies": {
+    "graphql": "^16.6.0",
+    "graphql-ws": "^5.11.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.5",
+    "react-markdown": "^8.0.3",
+    "remark-gfm": "^3.0.1",
+    "subscriptions-transport-ws": "^0.11.0",
+    "urql": "^3.0.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

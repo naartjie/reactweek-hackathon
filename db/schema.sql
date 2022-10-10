@@ -18,13 +18,26 @@ CREATE FUNCTION public.notify_card_updated() RETURNS trigger
     AS $$
 declare
   channel text := tg_argv[0];
+  id bigint;
 
-begin perform (
-  with payload(id, x, y, text) as (
+
+begin
+
+if tg_op = 'INSERT' or tg_op = 'UPDATE' then
+  id = new.id;
+else
+  id = old.id;
+end if;
+
+
+perform (
+  with payload(id, x, y, z_index, title, text) as (
     select
-      new.id,
+      id,
       new.x,
       new.y,
+      new.z_index,
+      new.title,
       new.text
   )
   select
@@ -52,7 +65,9 @@ CREATE TABLE public.card (
     id integer NOT NULL,
     x integer,
     y integer,
-    text text
+    text text,
+    title text DEFAULT ''::text,
+    z_index integer DEFAULT 1
 );
 
 
@@ -112,7 +127,7 @@ ALTER TABLE ONLY public.schema_migrations
 -- Name: card trigger_card_updated; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER trigger_card_updated AFTER INSERT OR UPDATE ON public.card FOR EACH ROW EXECUTE FUNCTION public.notify_card_updated('card.updated');
+CREATE TRIGGER trigger_card_updated AFTER INSERT OR DELETE OR UPDATE ON public.card FOR EACH ROW EXECUTE FUNCTION public.notify_card_updated('card.updated');
 
 
 --
@@ -126,4 +141,5 @@ CREATE TRIGGER trigger_card_updated AFTER INSERT OR UPDATE ON public.card FOR EA
 
 INSERT INTO public.schema_migrations (version) VALUES
     ('20221008183218'),
-    ('20221009130126');
+    ('20221009130126'),
+    ('20221009210732');

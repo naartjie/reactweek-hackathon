@@ -1,16 +1,34 @@
-import { useState } from "react"
+import {
+  createClient,
+  defaultExchanges,
+  subscriptionExchange,
+  Provider,
+} from "urql"
+import { SubscriptionClient } from "subscriptions-transport-ws"
+import { AddCard, AllCards } from "./Cards"
+
+const subscriptionClient = new SubscriptionClient(
+  "ws://localhost:8000/graphql",
+  { reconnect: true }
+)
+
+const client = createClient({
+  url: "http://localhost:8000/graphql",
+  exchanges: [
+    ...defaultExchanges,
+    subscriptionExchange({
+      forwardSubscription: (operation) => subscriptionClient.request(operation),
+    }),
+  ],
+})
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <div>
-      <h1>Got.Notes?</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
+      <Provider value={client}>
+        <AddCard />
+        <AllCards />
+      </Provider>
     </div>
   )
 }

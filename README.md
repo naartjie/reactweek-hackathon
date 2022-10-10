@@ -1,31 +1,45 @@
-# Instructions
+## Instructions
+
+Requirements: Docker, Node.js, Python (tested w/3.10)
+
+To get going run these commands:
 
 ```sh
 npm install
 npm run db:up
 npm run dbmate migrate
+
+# start the server
 npm run server
+
+# start the client (in another tab)
 npm run dev
 ```
 
-Open up 2 browsers side by side.
+Open up 2 browsers side by side: [http://localhost:5173](http://localhost:5173):
 
  * Add a note
  * Move a note
- * Edit a note
  * Watch the changes in the other browser
+ * (TODO) Edit a note
 
-### Client
+## Client
 
-React
+JS: React with Tailwind (DaisyUI)
 
-### Server
+## Server
 
-Python / GraphQL Subscriptions
+Python: FastAPI, GraphQL (Strawberry) with Subscriptions
 
-### TODO
-- readme
-- delete card
+## TODOs
 - add z-index
+- positioning bug
+  - deleting lower id card, shifts the rest of the cards relatively upwards
+- add card input
+  - enter adds
+  - no border around it
+- edit card title and text
+  - markdown editor
+- update fields selectively - make them optional in the upsert operation
 - heretext links between notes
-- invalid states when disconnect happen
+- verify state is consistent when client disconnects

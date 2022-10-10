@@ -5,13 +5,26 @@ create or replace function notify_card_updated ()
 as $$ 
 declare
   channel text := tg_argv[0];
+  id bigint;
 
-begin perform (
-  with payload(id, x, y, text) as (
+
+begin 
+
+if tg_op = 'INSERT' or tg_op = 'UPDATE' then
+  id = new.id;
+else
+  id = old.id;
+end if;
+
+
+perform (
+  with payload(id, x, y, z_index, title, text) as (
     select
-      new.id,
+      id,
       new.x,
       new.y,
+      new.z_index,
+      new.title,
       new.text
   )
   select
@@ -27,10 +40,10 @@ end;
 $$;
 
 create trigger trigger_card_updated
-after insert or update on card
+after insert or update or delete on card
 for each row execute procedure notify_card_updated('card.updated');
 
 -- migrate:down
 drop trigger if exists trigger_card_updated on card;
 
-drop function notify_card_updated;
+drop function if exists notify_card_updated;
