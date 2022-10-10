@@ -23,6 +23,12 @@ Open up 2 browsers side by side: [http://localhost:5173](http://localhost:5173):
  * Watch the changes in the other browser
  * (TODO) Edit a note
 
+### Cleanup
+To remove the postgres docker container afterwards
+```
+npm run db:kill
+```
+
 ## Client
 
 JS: React with Tailwind (DaisyUI)
