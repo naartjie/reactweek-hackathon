@@ -9,6 +9,9 @@ npm install
 npm run db:up
 npm run dbmate migrate
 
+# activate the virtualenv
+source .venv/bin/activate
+
 # start the server
 npm run server
 
